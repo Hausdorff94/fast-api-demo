@@ -52,6 +52,11 @@ def show_person(
 
 @app.get("/person/detail/{person_id}")
 def show_person(
-    person_id: int = Path(..., gt=0),
+    person_id: int = Path(
+        ...,
+        gt=0,
+        title='Person ID',
+        description='This is the ID of the person you are looking for. Its required and must be greater than 0.',
+        ),
 ):
     return {"person_id": person_id}
