@@ -1,8 +1,10 @@
 #Python
+from email.policy import default
 from typing import Optional
 
 #Pydantic
 from pydantic import BaseModel
+from pydantic import Field
 
 #FastAPI
 from fastapi import FastAPI
@@ -12,17 +14,45 @@ app = FastAPI()
 
 #Models
 
+class HairColor(Enum):
+    BLONDE = "blonde"
+    BROWN = "brown"
+    BLACK = "black"
+    RED = "red"
+    GREY = "grey"
+    WHITE = "white"
+
 class Location(BaseModel):
     city: str
     state: str
     country: str
 
 class Person(BaseModel):
-    first_name: str
-    last_name: str
-    age: int#Optional[int] = None
-    hair_color: Optional[str] = None
-    is_married: Optional[bool] = None
+    first_name: str = Field(
+        ...,
+        title="First Name",
+        description="The person's first name",
+        max_length=50,
+        min_length=2
+        )
+    last_name: str = Field(
+        ...,
+        title="Last Name",
+        description="The person's last name",
+        max_length=50,
+        min_length=2
+        )
+    age: int = Field(
+        ...,
+        title="Age",
+        description="The person's age",
+        gt=0,
+        lt=115
+        )
+    hair_color: Optional[HairColor] = Field(default=None)
+    is_married: Optional[bool] = Field(
+        default=None
+        )
 
 @app.get("/")
 def home():
