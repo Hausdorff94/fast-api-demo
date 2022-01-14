@@ -6,6 +6,9 @@ from typing import Optional
 from pydantic import BaseModel
 from pydantic import Field
 
+#Enum
+from enum import Enum
+
 #FastAPI
 from fastapi import FastAPI
 from fastapi import Body, Query, Path
@@ -53,6 +56,17 @@ class Person(BaseModel):
     is_married: Optional[bool] = Field(
         default=None
         )
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "first_name": "Facundo",
+                "last_name": "Gonzalez",
+                "age": 25,
+                "hair_color": HairColor.BLONDE,
+                "is_married": True
+            }
+        }
 
 @app.get("/")
 def home():
