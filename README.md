@@ -45,3 +45,38 @@ def home():
 `domain/redoc`
 
 - - - -
+
+# 2. Development the framework
+- - - -
+
+## Path operations
+![](images/path_op.png)
+
+- - - -
+
+## Path parameters
+![](images/path_par.png)
+
+- - - -
+
+## Query parameters
+![](images/query_par.png)
+
+- - - -
+
+## Request body & response body
+![](images/req_and_resp_body.png)
+
+
+```py
+#Request and Response body
+
+@app.post("/person/new")
+def create_person(person: Person = Body(...)):
+    return person
+```
+
+::The triple point `Body(...)` means that an attribute or parameter is required:: (in this case, the parameter `person`).
+
+- - - -
+#MLOps/Fast API Basic#
