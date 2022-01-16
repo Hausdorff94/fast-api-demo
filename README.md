@@ -1,5 +1,5 @@
 # 1. Introduction
-!["Uvicorn, Starlette and Pydantic"]("images/uvi-starlette.png")
+![Uvicorn, Starlette and Pydantic](images/uvi-starlette.png)
 
 * __Uvicorn:__ es una librería de Python que funciona de servidor, es decir, permite que cualquier computadora se convierta en un servidor
 
