@@ -79,4 +79,3 @@ def create_person(person: Person = Body(...)):
 ::The triple point `Body(...)` means that an attribute or parameter is required:: (in this case, the parameter `person`).
 
 - - - -
-#MLOps/Fast API Basic#
