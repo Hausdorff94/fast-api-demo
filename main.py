@@ -53,18 +53,18 @@ class Person(BaseModel):
         lt=115
         )
     hair_color: Optional[HairColor] = Field(default=None)
-    is_married: Optional[bool] = Field(
-        default=None
-        )
+    is_married: Optional[bool] = Field(default=None)
+    password: str = Field(..., min_length=8)
 
     class Config:
         schema_extra = {
             "example": {
-                "first_name": "Facundo",
-                "last_name": "Gonzalez",
+                "first_name": "Johny",
+                "last_name": "Vallejo",
                 "age": 25,
                 "hair_color": HairColor.BLONDE,
-                "is_married": True
+                "is_married": True,
+                "password": "12345678"
             }
         }
 
