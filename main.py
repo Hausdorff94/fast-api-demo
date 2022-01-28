@@ -6,7 +6,10 @@ from enum import Enum
 from typing import Optional
 
 # FastAPI
-from fastapi import Body, FastAPI, Path, Query, status
+from fastapi import Body, Path, Query, Form
+from fastapi import FastAPI
+from fastapi import status
+
 # Pydantic
 from pydantic import BaseModel, Field
 
@@ -78,6 +81,11 @@ class Person(PersonBase):
 
 class PersonOut(PersonBase):
     pass
+
+
+class LoginOut(BaseModel):
+    username: str = Field(..., max_length=10, example='johndoe')
+    messages: str = Field(default='Login successful')
 
 
 @app.get(
@@ -161,3 +169,10 @@ def update_person(
     results = person.dict()
     results.update(Location.dict())
     return results
+
+@app.post(
+    path = "/login",
+    status_code = status.HTTP_200_OK
+    )
+def login(username: str = Form(...), password: str = Form(...)):
+    return LoginOut(username=username)
