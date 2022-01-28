@@ -64,9 +64,34 @@ class Person(BaseModel):
                 "age": 25,
                 "hair_color": HairColor.BLONDE,
                 "is_married": True,
-                "password": "12345678"
+                "password": "example_password"
             }
         }
+
+class PersonOut(BaseModel):
+    first_name: str = Field(
+        ...,
+        title="First Name",
+        description="The person's first name",
+        max_length=50,
+        min_length=2
+        )
+    last_name: str = Field(
+        ...,
+        title="Last Name",
+        description="The person's last name",
+        max_length=50,
+        min_length=2
+        )
+    age: int = Field(
+        ...,
+        title="Age",
+        description="The person's age",
+        gt=0,
+        lt=115
+        )
+    hair_color: Optional[HairColor] = Field(default=None)
+    is_married: Optional[bool] = Field(default=None)
 
 @app.get("/")
 def home():
@@ -74,7 +99,7 @@ def home():
 
 # Request and Response body
 
-@app.post("/person/new")
+@app.post("/person/new", response_model=PersonOut)
 def create_person(person: Person = Body(...)):
     return person
 
