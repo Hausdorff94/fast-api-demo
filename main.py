@@ -1,4 +1,5 @@
 #Python
+from doctest import Example
 from email.policy import default
 from typing import Optional
 
@@ -30,68 +31,51 @@ class Location(BaseModel):
     state: str
     country: str
 
-class Person(BaseModel):
+class PersonBase(BaseModel):
     first_name: str = Field(
         ...,
         title="First Name",
         description="The person's first name",
         max_length=50,
-        min_length=2
+        min_length=2,
+        example = 'John'
         )
     last_name: str = Field(
         ...,
         title="Last Name",
         description="The person's last name",
         max_length=50,
-        min_length=2
+        min_length=2,
+        example = 'Doe'
         )
     age: int = Field(
         ...,
         title="Age",
         description="The person's age",
         gt=0,
-        lt=115
+        lt=115,
+        example = 25
         )
-    hair_color: Optional[HairColor] = Field(default=None)
-    is_married: Optional[bool] = Field(default=None)
-    password: str = Field(..., min_length=8)
+    hair_color: Optional[HairColor] = Field(default=None, example=HairColor.BLONDE)
+    is_married: Optional[bool] = Field(default=None, example=False)
 
-    class Config:
-        schema_extra = {
-            "example": {
-                "first_name": "Johny",
-                "last_name": "Vallejo",
-                "age": 25,
-                "hair_color": HairColor.BLONDE,
-                "is_married": True,
-                "password": "example_password"
-            }
-        }
+    # class Config:
+    #     schema_extra = {
+    #         "example": {
+    #             "first_name": "Johny",
+    #             "last_name": "Vallejo",
+    #             "age": 25,
+    #             "hair_color": HairColor.BLONDE,
+    #             "is_married": True,
+    #             "password": "example_password"
+    #         }
+    #     }
 
-class PersonOut(BaseModel):
-    first_name: str = Field(
-        ...,
-        title="First Name",
-        description="The person's first name",
-        max_length=50,
-        min_length=2
-        )
-    last_name: str = Field(
-        ...,
-        title="Last Name",
-        description="The person's last name",
-        max_length=50,
-        min_length=2
-        )
-    age: int = Field(
-        ...,
-        title="Age",
-        description="The person's age",
-        gt=0,
-        lt=115
-        )
-    hair_color: Optional[HairColor] = Field(default=None)
-    is_married: Optional[bool] = Field(default=None)
+class Person(PersonBase):
+    password: str = Field(..., min_length=8, example='example_password')
+
+class PersonOut(PersonBase):
+    pass
 
 @app.get("/")
 def home():
