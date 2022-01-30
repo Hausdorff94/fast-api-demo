@@ -1,6 +1,6 @@
 # Python
-from doctest import Example
-from email.policy import default
+# from doctest import Example
+# from email.policy import default
 # Enum
 from enum import Enum
 from typing import Optional
@@ -9,6 +9,7 @@ from typing import Optional
 from fastapi import Body, Path, Query, Form, Cookie, Header, File, UploadFile
 from fastapi import FastAPI
 from fastapi import status
+from fastapi import HTTPException
 
 # Pydantic
 from pydantic import EmailStr
@@ -132,6 +133,7 @@ def show_person(
 
 # Validations: Path parameters
 
+persons = [1, 2, 3, 4, 5]
 
 @app.get("/person/detail/{person_id}")
 def show_person(
@@ -143,7 +145,13 @@ def show_person(
         example=1
     ),
 ):
-    return {"person_id": person_id}
+    if person_id not in persons:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Person not found"
+        )
+    else:
+        return {"person_id": person_id}
 
 # Validations: Request body
 
