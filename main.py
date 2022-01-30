@@ -103,7 +103,9 @@ def home():
 @app.post(
     path="/person/new",
     response_model=PersonOut,
-    status_code=status.HTTP_201_CREATED)
+    status_code=status.HTTP_201_CREATED,
+    tags=["Persons"]
+    )
 def create_person(person: Person = Body(...)):
     return person
 
@@ -112,7 +114,9 @@ def create_person(person: Person = Body(...)):
 
 @app.get(
     path="/person/detail/",
-    status_code=status.HTTP_102_PROCESSING)
+    status_code=status.HTTP_102_PROCESSING,
+    tags=["Persons"]
+    )
 def show_person(
     name: Optional[str] = Query(
         None,
@@ -135,14 +139,18 @@ def show_person(
 
 persons = [1, 2, 3, 4, 5]
 
-@app.get("/person/detail/{person_id}")
+@app.get(
+    path = "/person/detail/{person_id}",
+    tags=["Persons"]
+    )
 def show_person(
     person_id: int = Path(
         ...,
         gt=0,
         title='Person ID',
         description='This is the ID of the person you are looking for. Its required and must be greater than 0.',
-        example=1
+        example=1,
+        tags=["Persons"]
     ),
 ):
     if person_id not in persons:
@@ -156,7 +164,10 @@ def show_person(
 # Validations: Request body
 
 
-@app.put("/person/{person_id}")
+@app.put(
+    path = "/person/{person_id}",
+    tags=["Persons"]
+    )
 def update_person(
     person_id: int = Path(
         ...,
@@ -184,7 +195,8 @@ def update_person(
 
 @app.post(
     path="/login",
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    tags=["Forms"]
 )
 def login(username: str = Form(...), password: str = Form(...)):
     return LoginOut(username=username)
@@ -194,7 +206,8 @@ def login(username: str = Form(...), password: str = Form(...)):
 
 @app.post(
     path='/contact',
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    tags=["Cookies and Headers"]
 )
 def contact(
     first_name: str = Form(
@@ -222,6 +235,7 @@ def contact(
 
 @app.post(
     path="/post-image",
+    tags=["Files"]
 )
 def post_image(
     image: UploadFile = File(...),
