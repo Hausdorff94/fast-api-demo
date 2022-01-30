@@ -104,9 +104,22 @@ def home():
     path="/person/new",
     response_model=PersonOut,
     status_code=status.HTTP_201_CREATED,
-    tags=["Persons"]
+    tags=["Persons"],
+    summary="Create a new person in the application",
     )
 def create_person(person: Person = Body(...)):
+    """
+    Create a new person
+
+    This endpoint will create a new person based on the information provided and save it to the database.
+
+    Parameters:
+    - Request body parameters:
+        - **person: Person** -> The person model with first name, last name, age, hair color, marital status and password.
+
+    Returns:
+    A person model with the person's first name, last name, age, hair color, marital status and password.
+    """
     return person
 
 # Validations: Query parameters
